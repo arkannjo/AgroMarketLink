@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "335254238099",
+    "firebase_url": "https://agromarketlinkfb-default-rtdb.firebaseio.com",
+    "project_id": "agromarketlinkfb",
+    "storage_bucket": "agromarketlinkfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335254238099:android:8c65328c8784e92f462e66",
+        "android_client_info": {
+          "package_name": "aml.fb2023"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc3MqWbIJlLM5EzSVaqTZq1a6klZdxgzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
