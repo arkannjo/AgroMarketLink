@@ -1,86 +1,101 @@
-# Flutter on Codespaces
+# Título do Projeto: AgroMarketLink
 
-This is a template repository for developing with [Flutter](https://flutter.dev/) on the web on [GitHub Codespaces](https://github.com/features/codespaces).
+## Descrição:
+AgroMarketLink é uma aplicação móvel dedicada a conectar pequenos produtores rurais diretamente a compradores locais, como mercados, restaurantes e processadores. Esta plataforma visa simplificar o processo de venda e compra, diminuir o tempo entre a colheita e a venda, e potencialmente obter preços melhores para os produtores ao eliminar intermediários.
 
-Flutter is a cross-platform UI framework by Google for building apps. Codespaces is a cloud-based development environment that lets you run a full-featured IDE in the cloud. This template repository lets you get started with Flutter on Codespaces in just a few clicks.
+## Funcionalidades Principais:
 
-**Table of Contents**
-- [Important things to note](#important-things-to-note)
-- [Setup](#setup)
-  - [Getting started](#getting-started)
-  - [Using a sample](#using-a-sample)
-- [Development Environment](#development-environment)
-  - [Developing in the browser](#developing-in-the-browser)
-  - [Developing in the desktop app](#developing-in-the-desktop-app)
-- [Flutter Development](#flutter-development)
-  - [Developing for mobile](#developing-for-mobile)
-- [Codespaces Usage](#codespaces-usage)
-  - [Managing your codespace](#managing-your-codespace)
+- **Perfil do Produtor:** Os produtores podem criar perfis detalhados, indicando os tipos de produtos que cultivam, quantidades disponíveis, métodos de cultivo (orgânico, convencional), localização, fotos dos produtos e outros detalhes relevantes.
 
-This repository is generated from the [dilanx/flutter-codespaces](https://github.com/dilanx/flutter-codespaces) repository.
+- **Perfil de Comprador:** Restaurante, Pessoa Física, Mercado em geral.
 
-## Important things to note
+- **Lista de Produtos:** Os produtores podem listar seus produtos individualmente, atualizando a disponibilidade em tempo real, definindo preços e fornecendo uma breve descrição do produto.
 
-Codespaces is not completely free. Free users have 120 core-hours per month and Pro users have 180 core-hours per month. The default codespace runs on a 2-core machine, so that's 60 hours (or 90 hours) of free usage per month before getting charged. Make sure to stop your codespace when you're not using it (it automatically stops after 30 minutes of inactivity by default). See more pricing details [here](https://docs.github.com/en/billing/managing-billing-for-github-codespaces/about-billing-for-github-codespaces), and manage your active codespaces [here](https://github.com/codespaces).
+- **Sistema de Pedidos:** Os compradores podem navegar pelos produtos disponíveis e fazer pedidos diretamente no aplicativo. Ao fazer um pedido, o produtor é notificado e pode aceitar ou recusar com base na disponibilidade e outros critérios.
 
-## Setup
+- **Avaliações e Comentários:** Após a conclusão de uma venda, compradores e produtores podem avaliar uns aos outros. Isso incentiva práticas comerciais justas e fornece uma referência para futuras transações.
 
-### Getting started
+- **Notificações:** Notificações push para informar os produtores sobre novos pedidos, mensagens ou alterações de status nos pedidos existentes.
 
-1. Press "Use this template" towards the top right of this repository and create a new repository from this template.
+- **Chat Integrado:** Um chat direto entre produtor e comprador para discutir detalhes como entrega, pagamento e esclarecer qualquer dúvida. Se for implementado!
 
-    > There's also an option to open this repository in Codespaces and publish it to GitHub later from there, but I recommend creating your own repository first.
+## Tecnologias Utilizadas:
 
-2. In your new repository, press "Code", select "Codespaces", then press "Create codespace on main". A container with everything you need to get started will be created automatically, then you'll be taken to your new codespace (VS Code in your browser). If you'd prefer to work on your codespace using the VS Code desktop app instead of the browser app, you can follow these instructions.
+- **Frontend:** Flutter (desenvolvimento multiplataforma para iOS e Android).
+- **Banco de Dados:** A definir
 
-3. Press the "Extensions" icon in the left sidebar. You'll see that the Flutter and Dart extensions are already being installed. The environment won't work properly until the installation is complete, so wait for it to finish.
+### Desenvolvimento:
+Codificação das funcionalidades e estruturação do banco de dados.
 
-4. In your integrated terminal (the TERMINAL tab), run `flutter pub get` to install the missing Flutter dependencies.
+### Teste Beta:
+Lançamento para um grupo seleto de produtores e compradores para coletar feedback e realizar ajustes.
 
-5. In the ports view (the PORTS tab), port 3000 should be listed there already. Right click on it, and, under "Port Visibility", select "Public". This is important so the app can access services on your client from other server ports without getting blocked due to CORS.
+## Impacto Esperado:
 
-6. Run `./run.sh` in the terminal to start the app. A notification will appear saying that an app opened on port 3000. You can press "Open in Browser" to open it, but it won't load until the terminal shows that it's ready. You can refresh once the app is loaded (as indicated by a prompt to press "R" to reload).
+Com o AgroMarketLink, espera-se:
+- Redução do tempo entre colheita e venda.
+- Melhoria nos preços para os produtores ao reduzir intermediários.
+- Fortalecimento dos negócios locais ao facilitar o acesso a produtos frescos e de qualidade.
+- Construção de uma comunidade de confiança entre produtores e compradores através de avaliações e feedbacks.
 
-    > You can find the link to access the app in your browser at any time by going to the ports view, right clicking on port 3000, and pressing "Open in Browser".
+## Requisitos Funcionais:
 
-7. That's it! Make changes in `lib/main.dart`, press "R" in the terminal, then refresh the page to see your changes appear quickly.
+### Perfil do Produtor:
+- Criação de perfis detalhados.
+- Indicação dos produtos cultivados.
+- Quantidades disponíveis.
+- Métodos de cultivo (orgânico, convencional).
+- Localização e detalhes de contato.
+- Upload de fotos dos produtos.
 
-### Using a sample
+### Perfil de Comprador:
+- Opção de perfil: Restaurante, Pessoa Física ou Mercado em geral.
+- Criação e edição de perfis com detalhes de contato.
 
-There are a collection of sample Flutter apps you can use. They're stored in the `samples` directory. If you want to use one of them, find the folder of the sample you want to use, then move the contents of the folder into the root of your repository. At minimum, this should overwrite `pubspec.yaml` and `lib`.
+### Lista de Produtos:
+- Adição de produtos com descrição, preço e quantidade.
+- Atualização em tempo real da disponibilidade.
 
-## Development Environment
+### Sistema de Pedidos:
+- Navegação e busca de produtos disponíveis.
+- Realização de pedidos diretamente no aplicativo.
+- Notificação para o produtor quando um novo pedido é feito.
+- O produtor tem a opção de aceitar ou recusar o pedido.
 
-### Developing in the browser
+### Avaliações e Comentários:
+- Avaliação mútua entre produtor e comprador após a conclusão da venda.
+- Espaço para comentários e feedback.
 
-The browser-based VS Code is the default editor for Codespaces, and has most of the features you'd need. Opening your codespace from [github.com/codespaces](https://github.com/codespaces) will automatically open the browser-based editor.
+### Notificações:
+- Notificações push sobre novos pedidos, mensagens ou alterações de status.
 
-### Developing in the desktop app
+### Chat Integrado (caso seja implementado):
+- Chat direto entre produtor e comprador.
+- Discussão sobre detalhes como entrega e pagamento.
 
-If you'd prefer to use the desktop app version of VS Code, you can follow these instructions:
+## Requisitos Não Funcionais:
 
-1. Download the [VS Code desktop app](https://code.visualstudio.com/). You probably already have it if you chose to follow these instructions.
+### Desempenho:
+- A aplicação deve ser rápida e responsiva em diferentes dispositivos móveis.
 
-2. Install the [GitHub Codespaces extension](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces).
+### Segurança:
+- Dados dos usuários devem ser armazenados de forma segura.
+- **As transações e chats devem ser criptografados.**
 
-3. Open the command pallette from the View menu (or cmd+shift+P / ctrl+shift+P) and run "Codespaces: Connect to Codespace...".
+### Usabilidade:
+- Interface amigável e intuitiva.
+- Tutorial ou orientação para novos usuários.
 
-    > Alternatively, click the button in the very bottom left of VS Code (it says "Open a Remote Window" if you hover over it) and press "Connect to Codespace...".
+### Compatibilidade:
+- A aplicação deve ser compatível com as principais versões de iOS e Android.
 
-4. Log in if necessary, then select your codespace from the list.
+### Disponibilidade:
+- O sistema deve estar disponível 24/7, com manutenções programadas fora dos horários de pico.
 
-## Flutter Development
+### Escalabilidade:
+- A aplicação deve ser capaz de suportar um número crescente de usuários e transações.
 
-### Developing for mobile
-
-Running Flutter in Codespaces makes it a bit difficult to run the app in a mobile simulator. However, developing for the web is basically the same as developing for mobile. I'd recommend opening your browser's developer tools and selecting a mobile device to emulate.
-
-If you're using Chrome or another Chromium-based browser, you can open DevTools like [this](https://developer.chrome.com/docs/devtools/open/) and emulate a device like [this](https://developer.chrome.com/docs/devtools/device-mode/). It'll be pretty similar for other browsers like Safari and Firefox.
-
-## Codespaces Usage
-
-### Managing your codespace
-
-When you're not using your codespace, deactivate it by going to [Codespaces](https://github.com/codespaces), pressing the 3 dots on the right side of the codespace, and pressing "Stop codespace". You can also deactivate it within the codespace by pressing "Codespaces" at the bottom left of VS Code and selecting "Stop Current Codespace".
-
-Edited files in your workspace are not deleted when stopping the codespace and the container won't need to be rebuilt when you start it again. Provided that you're under the storage limit (15 GB for Free users and 20 GB for Pro), you won't be charged if your codespace is offline. I recommend committing your repository changes on your codespace often to avoid losing work if you were to delete your codespace.
+## Devs:
+- Reinaldo Jose Damacena
+- Victor Tavares Moreira
+- Igor Brito dos Santos
