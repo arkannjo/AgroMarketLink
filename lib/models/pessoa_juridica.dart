@@ -15,6 +15,7 @@ class PessoaJuridica extends Pessoa {
   }) : super(id: id, nome: nome, endereco: endereco, telefone: telefone, email: email);
 
   // Conversão para/from map
+  @override
   Map<String, dynamic> toMap() {
     return {
       ...super.toMap(),

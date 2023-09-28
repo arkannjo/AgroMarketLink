@@ -13,6 +13,7 @@ class PessoaFisica extends Pessoa {
   }) : super(id: id, nome: nome, endereco: endereco, telefone: telefone, email: email);
 
   // Conversão para/from map (útil para armazenamento no Firebase)
+  @override
   Map<String, dynamic> toMap() {
     return {
       ...super.toMap(),
