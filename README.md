@@ -99,3 +99,41 @@ Com o AgroMarketLink, espera-se:
 - Reinaldo Jose Damacena
 - Victor Tavares Moreira
 - Igor Brito dos Santos
+
+## Diagrama do sistema: 
+
+lib/
+│
+├── main.dart
+│
+├── config/                 # Configurações globais e constantes.
+│
+├── models/                 # Modelos de dados, como Produtor, Produto, etc.
+│
+├── services/               # Serviços para comunicação com APIs, bancos de dados, etc.
+│   ├── api_service.dart
+│   ├── database_service.dart
+│   └── ...
+│
+├── screens/                # Telas/páginas da aplicação.
+│   ├── home_screen.dart
+│   ├── profile_screen.dart
+│   └── ...
+│
+├── widgets/                # Widgets reutilizáveis e componentes UI específicos.
+│   ├── custom_button.dart
+│   ├── responsive_layout.dart
+│   └── ...
+│
+├── utils/                  # Funções utilitárias e lógicas de negócios.
+│
+├── themes/                 # Temas e estilos.
+│   ├── app_colors.dart
+│   ├── text_themes.dart
+│   └── ...
+│
+├── routes/                 # Gerenciamento de rotas.
+│
+└── assets/                 # Imagens, fontes e outros ativos estáticos.
+    ├── images/
+    └── fonts/
