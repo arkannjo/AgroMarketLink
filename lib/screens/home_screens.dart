@@ -1,39 +1,60 @@
 import 'package:flutter/material.dart';
+import '/services/auth_service.dart';
+import '/routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("AgroMarketLink Home"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: _handleLogout,
+            tooltip: "Logout",
+          ),
+        ],
       ),
       body: _buildLayoutBasedOnScreenSize(),
     );
   }
 
+  void _handleLogout() async {
+    await _authService.logout();
+    Navigator.pushReplacementNamed(context, loginRoute);
+  }
+
   Widget _buildLayoutBasedOnScreenSize() {
-    // Aqui, você pode usar qualquer lógica para determinar o tamanho da tela
-    // e retornar o layout apropriado.
-    // Por exemplo:
-    if (MediaQuery.of(context).size.width < 600) {
+    double width = MediaQuery.of(context).size.width;
+
+    if (width < 600) {
       return _buildMobileLayout();
+    } else if (width < 1200) {
+      return _buildTabletLayout();
+    } else {
+      return _buildDesktopLayout();
     }
-    // Você pode adicionar condições adicionais para tablet, desktop, etc.
-    return Center(child: Text("Default layout"));
   }
 
   Widget _buildMobileLayout() {
-    // Seu código para layout mobile vai aqui.
     return Center(child: Text("Mobile Layout"));
   }
 
-  // Você pode adicionar mais métodos para outros layouts (tablet, desktop, etc.).
+  Widget _buildTabletLayout() {
+    return Center(child: Text("Tablet Layout"));
+  }
+
+  Widget _buildDesktopLayout() {
+    return Center(child: Text("Desktop Layout"));
+  }
 }

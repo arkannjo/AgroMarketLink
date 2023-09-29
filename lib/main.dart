@@ -1,23 +1,28 @@
+import '/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'services/firebase_service.dart';
+import 'services/auth_service.dart';  // Garanta que o AuthService esteja importado
 import 'themes/app_theme.dart';
-import 'screens/home_screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Inicialize o Firebase através do serviço
   await FirebaseService.initializeFirebase();
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
+    String initialRoute = _authService.isUserLoggedIn() ? homeRoute : loginRoute;
+
     return MaterialApp(
       title: 'AgroMarketLink',
       theme: AppTheme.agroTheme,
-      home: HomeScreen(),
+      initialRoute: initialRoute,
+      onGenerateRoute: generateRoute,
     );
   }
 }

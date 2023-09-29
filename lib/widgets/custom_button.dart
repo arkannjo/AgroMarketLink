@@ -26,16 +26,38 @@ class CustomButton extends StatelessWidget {
               ),
             )
           : Text(text),
-      style: ElevatedButton.styleFrom(
-        primary: AppTheme.agroTheme.primaryColor, // background color
-        onPrimary: Colors.white, // text color
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled))
+              return Colors.grey[300]!;
+            return AppTheme.agroTheme.primaryColor; 
+          },
         ),
-        textStyle: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        padding: MaterialStateProperty.all<EdgeInsets>(
+          EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        ),
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        elevation: MaterialStateProperty.resolveWith<double>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed)) return 5.0; 
+            return 8.0; 
+          },
+        ),
+        shadowColor: MaterialStateProperty.all<Color>(Colors.black.withOpacity(0.2)),
+        overlayColor: MaterialStateProperty.all<Color>(
+          AppTheme.agroTheme.primaryColor.withOpacity(0.1),
         ),
       ),
     );

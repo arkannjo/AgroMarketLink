@@ -1,7 +1,9 @@
+import 'package:agro_market_link/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '/services/auth_service.dart';
 import '/widgets/custom_text_field.dart';
 import '/widgets/custom_button.dart';
+import '/widgets/image.dart';
 
 enum AuthState {
   initial,
@@ -10,28 +12,47 @@ enum AuthState {
   success,
 }
 
-class LoginRegisterScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginRegisterScreenState createState() => _LoginRegisterScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginRegisterScreenState extends State<LoginRegisterScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+class _LoginScreenState extends State<LoginScreen> {
+  final AuthService _authService = AuthService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   String? errorMessage;
 
-  bool isLoginView = true;
   AuthState state = AuthState.initial;
 
-  bool isValid() {
+  @override
+  void initState() {
+    super.initState();
+
+    // Adicione listeners para atualizar a tela quando os valores dos campos de texto mudarem
+    emailController.addListener(() {
+      setState(() {});
+    });
+    passwordController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    // Lembre-se de descartar os controladores quando eles não forem mais necessários
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  bool get isValid {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
 
-    if (email.isEmpty || !email.contains('@') || password.isEmpty || password.length < 6) {
-      return false;
-    }
-    return true;
+    return email.isNotEmpty && email.contains('@') && password.isNotEmpty && password.length >= 6;
   }
 
   void _login() async {
@@ -41,37 +62,12 @@ class _LoginRegisterScreenState extends State<LoginRegisterScreen> {
     });
 
     try {
-      await _auth.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+      await _authService.login(emailController.text.trim(), passwordController.text.trim());
       setState(() {
         state = AuthState.success;
-      });
-      // Navegue para a tela inicial ou mostre uma mensagem de sucesso
-    } catch (e) {
-      setState(() {
-        state = AuthState.error;
-        errorMessage = e.toString();
-      });
-    }
-  }
-
-  void _register() async {
-    setState(() {
-      state = AuthState.loading;
-      errorMessage = null;
-    });
-
-    try {
-      await _auth.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      setState(() {
-        state = AuthState.success;
-      });
-      // Navegue para a tela inicial ou mostre uma mensagem de sucesso
+      });      
+      // Navegar para a tela Home após um login bem-sucedido
+      Navigator.pushReplacementNamed(context, homeRoute);
     } catch (e) {
       setState(() {
         state = AuthState.error;
@@ -84,7 +80,7 @@ class _LoginRegisterScreenState extends State<LoginRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isLoginView ? 'Login' : 'Register'),
+        title: Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -92,17 +88,28 @@ class _LoginRegisterScreenState extends State<LoginRegisterScreen> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              
               children: [
+                CustomMaterialImage(
+                            imagePath: '/home/reinaldo/AgroMarketLink/lib/assets/images/Logo.png',
+                            width: 150,  // Ajuste conforme necessário
+                            height: 150, // Ajuste conforme necessário
+                        ),
+                        SizedBox(height: 20),
                 CustomTextField(
                   controller: emailController,
                   hint: 'Email',
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.emailAddress, validator: (value) {
+                    return null;
+                  },
                 ),
                 SizedBox(height: 20),
                 CustomTextField(
                   controller: passwordController,
                   hint: 'Password',
-                  isPassword: true,
+                  isPassword: true, validator: (value) {
+                    return null;
+                    },
                 ),
                 SizedBox(height: 20),
                 if (state == AuthState.error && errorMessage != null)
@@ -115,18 +122,20 @@ class _LoginRegisterScreenState extends State<LoginRegisterScreen> {
                   CircularProgressIndicator(),
                 if (state != AuthState.loading)
                   CustomButton(
-                    text: isLoginView ? 'Login' : 'Register',
-                    onPressed: isValid() ? (isLoginView ? _login : _register) : null,
+                    text: 'Login',
+                    onPressed: isValid ? _login : null, // Use o getter diretamente aqui
                   ),
                 SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      isLoginView = !isLoginView;
-                    });
-                  },
-                  child: Text(isLoginView ? 'Switch to Register' : 'Switch to Login'),
-                ),
+                if (state != AuthState.loading)
+                  TextButton(
+                    child: Text(
+                      'Não tem uma conta? Registre-se',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, registerRoute);
+                    },
+                  ),
               ],
             ),
           ),
