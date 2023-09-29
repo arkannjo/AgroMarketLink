@@ -1,31 +1,8 @@
 import 'pessoa.dart';
+import 'produto.dart';
 
 enum MetodoCultivo { organico, convencional }
 
-class Produto {
-  String descricao;
-  double preco;
-  int quantidade;
-
-  Produto({
-    required this.descricao,
-    required this.preco,
-    required this.quantidade,
-  });
-
-  Produto.fromMap(Map<String, dynamic> map)
-      : descricao = map['descricao'],
-        preco = map['preco'],
-        quantidade = map['quantidade'];
-
-  Map<String, dynamic> toMap() {
-    return {
-      'descricao': descricao,
-      'preco': preco,
-      'quantidade': quantidade,
-    };
-  }
-}
 
 class Produtor extends Pessoa {
   List<Produto> produtosCultivados = [];
