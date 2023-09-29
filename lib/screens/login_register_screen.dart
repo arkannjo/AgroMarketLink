@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '/services/auth_service.dart';
 import '/widgets/custom_text_field.dart';
 import '/widgets/custom_button.dart';
+import '/widgets/image.dart';
 
 enum AuthState {
   initial,
@@ -12,6 +13,8 @@ enum AuthState {
 }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -85,17 +88,28 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              
               children: [
+                CustomMaterialImage(
+                            imagePath: '/home/reinaldo/AgroMarketLink/lib/assets/images/Logo.png',
+                            width: 150,  // Ajuste conforme necessário
+                            height: 150, // Ajuste conforme necessário
+                        ),
+                        SizedBox(height: 20),
                 CustomTextField(
                   controller: emailController,
                   hint: 'Email',
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.emailAddress, validator: (value) {
+                    return null;
+                  },
                 ),
                 SizedBox(height: 20),
                 CustomTextField(
                   controller: passwordController,
                   hint: 'Password',
-                  isPassword: true,
+                  isPassword: true, validator: (value) {
+                    return null;
+                    },
                 ),
                 SizedBox(height: 20),
                 if (state == AuthState.error && errorMessage != null)

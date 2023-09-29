@@ -14,6 +14,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool isLoading = false;
+
   String userType = 'Produtor';
   String email = '';
   String password = '';
@@ -27,15 +29,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register')),
+      appBar: AppBar(title: Text('Registro')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ResponsiveLayout(
-            mobile: _buildMobileLayout(),
-            tablet: _buildTabletLayout(),
-            // Adicione desktop ou outros layouts se você os definiu
+        child: Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: ResponsiveLayout(
+                mobile: _buildMobileLayout(),
+                tablet: _buildTabletLayout(),
+              ),
+            ),
           ),
         ),
       ),
@@ -79,32 +89,77 @@ class _RegisterScreenState extends State<RegisterScreen> {
       CustomTextField(
         onChanged: (value) => email = value,
         hint: 'Email',
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value == null || !value.contains('@')) {
+            return 'Por favor, insira um email válido.';
+          }
+          return null;
+        },
       ),
       CustomTextField(
         onChanged: (value) => password = value,
-        hint: 'Password',
+        hint: 'Senha',
         isPassword: true,
+        validator: (value) {
+          if (value == null || value.length < 6) {
+            return 'A senha deve ter pelo menos 6 caracteres.';
+          }
+          return null;
+        },
       ),
       if (userType == 'PessoaJuridica')
         CustomTextField(
           onChanged: (value) => razaoSocial = value,
           hint: 'Razão Social',
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Por favor, insira uma razão social.';
+            }
+            return null;
+          },
         ),
       CustomTextField(
         onChanged: (value) => cpfOrCnpj = value,
         hint: userType == 'PessoaFisica' ? 'CPF' : 'CNPJ',
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, insira um ${userType == 'PessoaFisica' ? 'CPF' : 'CNPJ'}.';
+          }
+          // Aqui você pode adicionar mais validações para CPF e CNPJ.
+          return null;
+        },
       ),
       CustomTextField(
         onChanged: (value) => nome = value,
         hint: 'Nome',
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, insira um nome.';
+          }
+          return null;
+        },
       ),
       CustomTextField(
         onChanged: (value) => endereco = value,
         hint: 'Endereço',
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, insira um endereço.';
+          }
+          return null;
+        },
       ),
       CustomTextField(
         onChanged: (value) => telefone = value,
         hint: 'Telefone',
+        keyboardType: TextInputType.phone,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, insira um número de telefone.';
+          }
+          return null;
+        },
       ),
       if (userType == 'Produtor')
         DropdownButton<String>(
@@ -122,27 +177,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }).toList(),
         ),
+      SizedBox(height: 20), // Espaçamento antes do botão
       CustomButton(
-        text: 'Register',
-        onPressed: _register,
+        text: isLoading ? 'Carregando...' : 'Registrar',
+        onPressed: isLoading ? null : _register,
       ),
     ];
   }
 
-  void _register() {
+  void _register() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
+      bool success = false;
       switch (userType) {
         case 'Produtor':
-          ProdutorRegisterService().registerProdutor(email, password, cpfOrCnpj, nome, endereco, telefone, metodoCultivo);
+          success = await ProdutorRegisterService().registerProdutor(
+              email, password, cpfOrCnpj, nome, endereco, telefone, metodoCultivo);
           break;
         case 'PessoaFisica':
-          PessoaFisicaService().registerPessoaFisica(email, password, cpfOrCnpj, nome, endereco, telefone);
+          success = await PessoaFisicaService().registerPessoaFisica(
+              email, password, cpfOrCnpj, nome, endereco, telefone);
           break;
         case 'PessoaJuridica':
-          PessoaJuridicaService().registerPessoaJuridica(email, password, cpfOrCnpj, nome, endereco, telefone, razaoSocial);
+          success = await PessoaJuridicaService().registerPessoaJuridica(
+              email, password, cpfOrCnpj, nome, endereco, telefone, razaoSocial);
           break;
       }
-      // Adicione navegação ou tratamento de sucesso aqui...
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (success) {
+        // Sucesso ao registrar. Pode navegar para outra tela, mostrar um snackbar, etc.
+        Navigator.of(context).pop(); // por exemplo, voltar à tela anterior
+      } else {
+        // Erro ao registrar. Mostrar um alerta ou snackbar.
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao registrar. Tente novamente.')),
+        );
+      }
     }
   }
 }

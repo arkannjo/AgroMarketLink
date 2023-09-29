@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
     required this.hint,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
-    this.onChanged,
+    this.onChanged, required String? Function(dynamic value) validator,
   });
 
   @override
