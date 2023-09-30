@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:agro_market_link/routes/routes.dart';
 import 'package:flutter/material.dart';
 import '/services/auth_service.dart';
@@ -13,13 +15,13 @@ enum AuthState {
 }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final AuthService _authService = AuthService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -61,13 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
       errorMessage = null;
     });
 
+  Future<void> handleLogin() async {
     try {
       await _authService.login(emailController.text.trim(), passwordController.text.trim());
       setState(() {
         state = AuthState.success;
-      });      
+      });
+
       // Navegar para a tela Home após um login bem-sucedido
-      Navigator.pushReplacementNamed(context, homeRoute);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, homeRoute);
+      });
+
     } catch (e) {
       setState(() {
         state = AuthState.error;
@@ -76,11 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -90,12 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               
               children: [
-                CustomMaterialImage(
+                const CustomMaterialImage(
                             imagePath: '/home/reinaldo/AgroMarketLink/lib/assets/images/Logo.png',
                             width: 150,  // Ajuste conforme necessário
                             height: 150, // Ajuste conforme necessário
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                 CustomTextField(
                   controller: emailController,
                   hint: 'Email',
@@ -103,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomTextField(
                   controller: passwordController,
                   hint: 'Password',
@@ -111,24 +119,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                     },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (state == AuthState.error && errorMessage != null)
                   Text(
                     errorMessage!,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (state == AuthState.loading)
-                  CircularProgressIndicator(),
+                  const CircularProgressIndicator(),
                 if (state != AuthState.loading)
                   CustomButton(
                     text: 'Login',
                     onPressed: isValid ? _login : null, // Use o getter diretamente aqui
                   ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (state != AuthState.loading)
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'Não tem uma conta? Registre-se',
                       style: TextStyle(color: Colors.blue),
                     ),
@@ -143,4 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+  @override
+  Widget build(BuildContext context) => throw UnimplementedError();
 }

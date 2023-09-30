@@ -6,7 +6,7 @@ class CustomMaterialImage extends StatefulWidget {
   final double? height;
   final BorderRadius borderRadius;
 
-  CustomMaterialImage({
+  const CustomMaterialImage({super.key, 
     required this.imagePath,
     this.width,
     this.height,
@@ -14,10 +14,10 @@ class CustomMaterialImage extends StatefulWidget {
   });
 
   @override
-  _CustomMaterialImageState createState() => _CustomMaterialImageState();
+  CustomMaterialImageState createState() => CustomMaterialImageState();
 }
 
-class _CustomMaterialImageState extends State<CustomMaterialImage> with SingleTickerProviderStateMixin {
+class CustomMaterialImageState extends State<CustomMaterialImage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -26,7 +26,7 @@ class _CustomMaterialImageState extends State<CustomMaterialImage> with SingleTi
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
     _controller.forward();
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import '/services/produtor_register_service.dart';
 import '/services/pessoajuridica_register_service.dart';
@@ -7,11 +9,13 @@ import '/widgets/custom_button.dart';
 import '/widgets/responsive_layout.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  RegisterScreenState createState() => RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
@@ -29,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Registro')),
+      appBar: AppBar(title: const Text('Registro')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
@@ -61,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _buildTabletLayout() {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 600),
+        constraints: const BoxConstraints(maxWidth: 600),
         child: ListView(
           children: _buildFormContent(),
         ),
@@ -177,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }).toList(),
         ),
-      SizedBox(height: 20), // Espaçamento antes do botão
+      const SizedBox(height: 20), // Espaçamento antes do botão
       CustomButton(
         text: isLoading ? 'Carregando...' : 'Registrar',
         onPressed: isLoading ? null : _register,
@@ -217,7 +221,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } else {
         // Erro ao registrar. Mostrar um alerta ou snackbar.
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao registrar. Tente novamente.')),
+          const SnackBar(content: Text('Erro ao registrar. Tente novamente.')),
         );
       }
     }

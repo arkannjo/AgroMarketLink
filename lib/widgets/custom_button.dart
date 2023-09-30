@@ -6,7 +6,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
 
-  CustomButton({
+  const CustomButton({super.key, 
     required this.text,
     this.onPressed,
     this.isLoading = false,
@@ -16,30 +16,21 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
-      child: isLoading
-          ? SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 3,
-              ),
-            )
-          : Text(text),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
-            if (states.contains(MaterialState.disabled))
+            if (states.contains(MaterialState.disabled)) {
               return Colors.grey[300]!;
+            }
             return AppTheme.agroTheme.primaryColor; 
           },
         ),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         padding: MaterialStateProperty.all<EdgeInsets>(
-          EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         ),
         textStyle: MaterialStateProperty.all<TextStyle>(
-          TextStyle(
+          const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -60,6 +51,16 @@ class CustomButton extends StatelessWidget {
           AppTheme.agroTheme.primaryColor.withOpacity(0.1),
         ),
       ),
+      child: isLoading
+          ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 3,
+              ),
+            )
+          : Text(text),
     );
   }
 }

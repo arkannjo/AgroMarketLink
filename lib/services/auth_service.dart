@@ -1,5 +1,6 @@
 // auth_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'firestore_service.dart';
 
 class AuthService {
@@ -19,7 +20,9 @@ class AuthService {
       return result.user;
 
     } catch (error) {
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       return null;
     }
     
@@ -34,7 +37,9 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       return result.user;
     } catch (error) {
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       throw Exception('Erro ao tentar fazer login: ${error.toString()}');
     }
   }

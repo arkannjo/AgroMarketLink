@@ -9,7 +9,7 @@ class ResponsiveLayout extends StatelessWidget {
   static const double mobileMaxWidth = 800;
   static const double tabletMaxWidth = 1200;
 
-  ResponsiveLayout({
+  const ResponsiveLayout({super.key, 
     required this.mobile,
     this.tablet,
     this.desktop,
@@ -36,13 +36,13 @@ class ResponsiveLayout extends StatelessWidget {
 class FadeTransitionLayout extends StatefulWidget {
   final Widget child;
 
-  FadeTransitionLayout({required this.child});
+  const FadeTransitionLayout({super.key, required this.child});
 
   @override
-  _FadeTransitionLayoutState createState() => _FadeTransitionLayoutState();
+  FadeTransitionLayoutState createState() => FadeTransitionLayoutState();
 }
 
-class _FadeTransitionLayoutState extends State<FadeTransitionLayout> with TickerProviderStateMixin {
+class FadeTransitionLayoutState extends State<FadeTransitionLayout> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
 
@@ -51,7 +51,7 @@ class _FadeTransitionLayoutState extends State<FadeTransitionLayout> with Ticker
     super.initState();
 
     _controller = AnimationController(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 

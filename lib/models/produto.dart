@@ -28,8 +28,8 @@ class Produto {
 
 class OfertaProduto {
   final String id;
-  final String produtoId;  // apenas o ID do produto
-  final String produtorId; // apenas o ID do produtor
+  final String produtoId;  
+  final String produtorId; 
   final double preco;
   final double quantidadeDisponivel;
 

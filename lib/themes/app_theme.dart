@@ -13,7 +13,7 @@ class AppTheme {
       
 
       // Esquema de Cores
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: _primaryColor,
         secondary: _secondaryColor,
       ),
@@ -25,7 +25,7 @@ class AppTheme {
       elevatedButtonTheme: _elevatedButtonTheme(),
 
       // Ícones com cores do tema
-      iconTheme: IconThemeData(color: _primaryColor),
+      iconTheme: const IconThemeData(color: _primaryColor),
 
       // Ajuste a densidade visual para adaptar a interface ao dispositivo
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -46,8 +46,9 @@ class AppTheme {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
-            if (states.contains(MaterialState.disabled))
+            if (states.contains(MaterialState.disabled)) {
               return Colors.grey.shade300;
+            }
             return _primaryColor;
           },
         ),
@@ -58,7 +59,7 @@ class AppTheme {
         ),
         textStyle: MaterialStateProperty.resolveWith<TextStyle>(
           (Set<MaterialState> states) {
-            return TextStyle(
+            return const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             );
@@ -71,19 +72,19 @@ class AppTheme {
   // Tipografia
   static TextTheme _textTheme(TextTheme base) {
     return base.copyWith(
-      headline1: base.headline1!.copyWith(fontWeight: FontWeight.w500),
-      headline2: base.headline2!.copyWith(fontWeight: FontWeight.w500),
-      headline3: base.headline3!.copyWith(fontWeight: FontWeight.w500),
-      headline4: base.headline4!.copyWith(fontWeight: FontWeight.w500),
-      headline5: base.headline5!.copyWith(fontWeight: FontWeight.w500),
-      headline6: base.headline6!.copyWith(fontWeight: FontWeight.w500),
-      bodyText1: base.bodyText1!.copyWith(fontWeight: FontWeight.w400),
-      bodyText2: base.bodyText2!.copyWith(fontWeight: FontWeight.w400),
-      caption: base.caption!.copyWith(
+      displayLarge: base.displayLarge!.copyWith(fontWeight: FontWeight.w500),
+      displayMedium: base.displayMedium!.copyWith(fontWeight: FontWeight.w500),
+      displaySmall: base.displaySmall!.copyWith(fontWeight: FontWeight.w500),
+      headlineMedium: base.headlineMedium!.copyWith(fontWeight: FontWeight.w500),
+      headlineSmall: base.headlineSmall!.copyWith(fontWeight: FontWeight.w500),
+      titleLarge: base.titleLarge!.copyWith(fontWeight: FontWeight.w500),
+      bodyLarge: base.bodyLarge!.copyWith(fontWeight: FontWeight.w400),
+      bodyMedium: base.bodyMedium!.copyWith(fontWeight: FontWeight.w400),
+      bodySmall: base.bodySmall!.copyWith(
         fontWeight: FontWeight.w400,
         color: Colors.grey.shade700,
       ),
-      button: base.button!.copyWith(
+      labelLarge: base.labelLarge!.copyWith(
         fontWeight: FontWeight.bold,
         letterSpacing: 1.5,
       ),

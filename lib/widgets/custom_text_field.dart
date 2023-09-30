@@ -7,7 +7,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
 
-  CustomTextField({
+  const CustomTextField({super.key, 
     this.controller,
     required this.hint,
     this.isPassword = false,
@@ -16,10 +16,10 @@ class CustomTextField extends StatefulWidget {
   });
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
 
@@ -49,7 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         hintStyle: TextStyle(color: Colors.grey[500]),
         filled: true,
         fillColor: _focusNode.hasFocus ? Colors.grey[200] : Colors.grey[100],
-        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide.none,

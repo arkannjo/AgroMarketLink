@@ -6,20 +6,20 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final AuthService _authService = AuthService();
+class HomeScreenState extends State<HomeScreen> {
+  final AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AgroMarketLink Home"),
+        title: const Text("AgroMarketLink Home"),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
             onPressed: _handleLogout,
             tooltip: "Logout",
           ),
@@ -29,10 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _handleLogout() async {
-    await _authService.logout();
+  void _handleLogout() {
+  authService.logout().then((_) {
     Navigator.pushReplacementNamed(context, loginRoute);
-  }
+  });
+}
 
   Widget _buildLayoutBasedOnScreenSize() {
     double width = MediaQuery.of(context).size.width;
@@ -47,14 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMobileLayout() {
-    return Center(child: Text("Mobile Layout"));
+    return const Center(child: Text("Mobile Layout"));
   }
 
   Widget _buildTabletLayout() {
-    return Center(child: Text("Tablet Layout"));
+    return const Center(child: Text("Tablet Layout"));
   }
 
   Widget _buildDesktopLayout() {
-    return Center(child: Text("Desktop Layout"));
+    return const Center(child: Text("Desktop Layout"));
   }
 }
