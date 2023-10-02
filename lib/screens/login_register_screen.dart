@@ -57,31 +57,36 @@ class LoginScreenState extends State<LoginScreen> {
     return email.isNotEmpty && email.contains('@') && password.isNotEmpty && password.length >= 6;
   }
 
-  void _login() async {
-    setState(() {
-      state = AuthState.loading;
-      errorMessage = null;
+  void _login() {
+  setState(() {
+    state = AuthState.loading;
+    errorMessage = null;
+  });
+
+  handleLogin(); // Chama a função aqui
+}
+
+Future<void> handleLogin() async {
+  try {
+    await _authService.login(emailController.text.trim(), passwordController.text.trim());
+    print('Login success');
+    setState(() {      
+      state = AuthState.success;
     });
 
-  Future<void> handleLogin() async {
-    try {
-      await _authService.login(emailController.text.trim(), passwordController.text.trim());
-      setState(() {
-        state = AuthState.success;
-      });
+    // Navegar para a tela Home após um login bem-sucedido
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('Navigating to homeRoute');
+      Navigator.pushReplacementNamed(context, homeRoute);
+    });
 
-      // Navegar para a tela Home após um login bem-sucedido
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacementNamed(context, homeRoute);
-      });
-
-    } catch (e) {
-      setState(() {
-        state = AuthState.error;
-        errorMessage = e.toString();
-      });
-    }
+  } catch (e) {
+    setState(() {
+      state = AuthState.error;
+      errorMessage = e.toString();
+    });
   }
+}
 
 
   @override
@@ -153,6 +158,4 @@ class LoginScreenState extends State<LoginScreen> {
   }
 }
 
-  @override
-  Widget build(BuildContext context) => throw UnimplementedError();
-}
+

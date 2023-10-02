@@ -20,7 +20,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   bool isLoading = false;
 
-  String userType = 'Produtor';
+  String userType = 'produtor';
   String email = '';
   String password = '';
   String cpfOrCnpj = '';
@@ -82,7 +82,7 @@ class RegisterScreenState extends State<RegisterScreen> {
             userType = newValue!;
           });
         },
-        items: <String>['Produtor', 'PessoaFisica', 'PessoaJuridica']
+        items: <String>['produtor', 'pessoaFisica', 'pessoaJuridica']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -112,7 +112,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           return null;
         },
       ),
-      if (userType == 'PessoaJuridica')
+      if (userType == 'pessoaJuridica')
         CustomTextField(
           onChanged: (value) => razaoSocial = value,
           hint: 'Razão Social',
@@ -125,7 +125,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         ),
       CustomTextField(
         onChanged: (value) => cpfOrCnpj = value,
-        hint: userType == 'PessoaFisica' ? 'CPF' : 'CNPJ',
+        hint: userType == 'pessoaFisica' ? 'CPF' : 'CNPJ',
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Por favor, insira um ${userType == 'PessoaFisica' ? 'CPF' : 'CNPJ'}.';
@@ -165,7 +165,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           return null;
         },
       ),
-      if (userType == 'Produtor')
+      if (userType == 'produtor')
         DropdownButton<String>(
           value: metodoCultivo,
           onChanged: (String? newValue) {
@@ -197,15 +197,15 @@ class RegisterScreenState extends State<RegisterScreen> {
 
       bool success = false;
       switch (userType) {
-        case 'Produtor':
+        case 'produtor':
           success = await ProdutorRegisterService().registerProdutor(
               email, password, cpfOrCnpj, nome, endereco, telefone, metodoCultivo);
           break;
-        case 'PessoaFisica':
+        case 'pessoaFisica':
           success = await PessoaFisicaService().registerPessoaFisica(
               email, password, cpfOrCnpj, nome, endereco, telefone);
           break;
-        case 'PessoaJuridica':
+        case 'pessoaJuridica':
           success = await PessoaJuridicaService().registerPessoaJuridica(
               email, password, cpfOrCnpj, nome, endereco, telefone, razaoSocial);
           break;

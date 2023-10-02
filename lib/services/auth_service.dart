@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'firestore_service.dart';
+enum UserType { pessoaFisica, pessoaJuridica, produtor }
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -28,9 +29,37 @@ class AuthService {
     
   }
   
+  
   bool isUserLoggedIn() {
     return _auth.currentUser != null;
   }
+
+  Future<UserType?> getUserType() async {
+    if (!isUserLoggedIn()) {
+      return null;
+    }
+    var userDocument = await _firestoreService.getDocument(_auth.currentUser!.uid);
+    print(userDocument.data());
+    if (userDocument.exists) {
+      var userData = userDocument.data() as Map<String, dynamic>?;
+      if (userData != null) {
+        var userTypeString = userData['type'] as String?;
+        print(userTypeString);
+        switch (userTypeString) {
+          case 'pessoaFisica':
+            return UserType.pessoaFisica;
+          case 'pessoaJuridica':
+            return UserType.pessoaJuridica;
+          case 'produtor':
+            return UserType.produtor;
+          default:
+            return null;
+        }
+      }
+    }
+    return null;
+  }
+
   
   Future<User?> login(String email, String password) async {
     try {

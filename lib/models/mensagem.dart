@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Mensagem {
-  final String id;
-  final String idSender; // ID de quem envia a mensagem
-  final String idReceiver; // ID de quem recebe a mensagem
+  final String? id; // Agora é opcional
+  final String idSender;
+  final String idReceiver;
   final String texto;
   final DateTime dataEnvio;
 
   Mensagem({
-    required this.id,
+    this.id,
     required this.idSender,
     required this.idReceiver,
     required this.texto,
@@ -15,11 +17,11 @@ class Mensagem {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      if (id != null) 'id': id,
       'idSender': idSender,
       'idReceiver': idReceiver,
       'texto': texto,
-      'dataEnvio': dataEnvio.toIso8601String(),
+      'dataEnvio': Timestamp.fromDate(dataEnvio), // Convertendo para Timestamp
     };
   }
 
@@ -29,7 +31,7 @@ class Mensagem {
       idSender: map['idSender'],
       idReceiver: map['idReceiver'],
       texto: map['texto'],
-      dataEnvio: DateTime.parse(map['dataEnvio']),
+      dataEnvio: (map['dataEnvio'] as Timestamp).toDate(), // Convertendo de Timestamp para DateTime
     );
   }
 }
